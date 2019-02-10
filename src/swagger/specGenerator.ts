@@ -69,10 +69,13 @@ export class SpecGenerator {
 
       // Enum definition
       if (referenceType.enums) {
+        const isNumericEnumArray = !(referenceType.enums as any[]).some(isNaN);
+        const type = isNumericEnumArray ? 'integer' : 'string';
+
         definitions[referenceType.refName] = {
           description: referenceType.description,
           enum: referenceType.enums,
-          type: 'integer',
+          type,
         };
       }
     });
